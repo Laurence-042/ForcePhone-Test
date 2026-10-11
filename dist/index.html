@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0d1321">
+  <meta name="description" content="使用手机扬声器和麦克风探索 ForcePhone 的结构传声压力感知原理。">
+  <title>ForcePhone Lab · 声学压力实验</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="shell">
+    <header class="topbar"><div class="brand"><span class="brand-mark">◉</span><span>FORCEPHONE <b>LAB</b></span></div><span class="lab-tag">浏览器声学实验 · v0.1</span></header>
+    <section class="intro"><p class="eyebrow">STRUCTURE-BORNE SOUND / 结构传声</p><h1>让手机听见<br><em>你的力度。</em></h1><p class="lead">扬声器发出短促高频信号，麦克风观察机身振动传播的变化。按压或轻捏手机，看看曲线是否响应。</p></section>
+    <section class="workspace">
+      <div class="panel monitor">
+        <div class="panel-heading"><div><p class="eyebrow">LIVE SIGNAL</p><h2>实时感应</h2></div><span id="stateBadge" class="badge idle"><i></i>未启动</span></div>
+        <div class="meter"><div class="meter-copy"><span>相对信号衰减</span><strong id="pressureValue">--<small>%</small></strong><span id="pressureLabel" class="meter-label">等待检测</span></div><div class="orb-wrap"><div id="orb" class="orb"><div class="orb-core"></div></div></div></div>
+        <div class="graph-heading"><span>匹配信号强度</span><span id="qualityText">信号质量 --</span></div><canvas id="chart" aria-label="实时声学信号强度图" role="img"></canvas>
+        <div class="stats"><div><span>采样率</span><strong id="sampleRate">--</strong></div><div><span>每秒探测</span><strong>20 次</strong></div><div><span>基线</span><strong id="baselineText">未校准</strong></div></div>
+      </div>
+      <div class="side">
+        <section class="panel controls"><p class="eyebrow">01 / START</p><h2>开始实验</h2><p>请在手机本机打开，保持扬声器和麦克风无遮挡。不要连接耳机或蓝牙音箱。</p><button id="startButton" class="primary" type="button">允许麦克风并开始 <span>↗</span></button><button id="stopButton" class="secondary" type="button" disabled>停止实验</button><div id="status" class="status" role="status" aria-live="polite">需要 HTTPS 或 localhost，以及麦克风权限。</div></section>
+        <section class="panel calibrate"><p class="eyebrow">02 / CALIBRATE</p><h2>校准空载基线</h2><p>启动后把手机放在稳定桌面上，双手离开设备，再点校准。等待约 2 秒。</p><button id="calibrateButton" class="secondary full" type="button" disabled>重新校准基线 <span>↻</span></button><p class="tiny">数字代表相对于空载基线的声学变化，不是牛顿或克。</p></section>
+      </div>
+    </section>
+    <section class="details"><div class="detail"><span class="detail-num">03 / AUDIO PATH</span><h2>录音链路检查</h2><p>已请求关闭会抹除回放信号的三项处理；以下显示麦克风轨道实际报告的设置。</p><div class="settings"><div><span>回声消除</span><strong id="echoSetting">待启动</strong></div><div><span>噪声抑制</span><strong id="noiseSetting">待启动</strong></div><div><span>自动增益</span><strong id="gainSetting">待启动</strong></div></div></div><div class="detail"><span class="detail-num">04 / METHOD</span><h2>如何读取结果</h2><p>每 50 ms 播放一次 25 ms 的 18–22 kHz 扫频信号。对麦克风数据做匹配滤波，并比较主峰提前约 20 个采样点处的信号与空载基线。</p><p>这是论文思路的网页实验版。浏览器无法指定内部扬声器或麦克风，也不能保证操作系统关闭额外音频处理；不同设备可能完全收不到高频信号。</p><a href="https://rtcl.eecs.umich.edu/rtclweb/assets/publications/2016/paper-mobisys-final_refined_by_apple.pdf" target="_blank" rel="noopener noreferrer">阅读 ForcePhone 原论文 ↗</a></div></section>
+    <footer>ForcePhone Lab · 本地处理音频，不上传录音。音量从低档开始；如果听到刺耳声音，立即停止。</footer>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
