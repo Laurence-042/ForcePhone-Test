@@ -101,7 +101,7 @@ async function start() {
     audioContext = new AudioContext({ sampleRate: 48000, latencyHint: 'interactive' })
     if (audioContext.sampleRate < 42000) throw new Error(`实际采样率 ${audioContext.sampleRate} Hz，无法可靠播放 18–22 kHz 信号。`)
     const inspect = createSignalAnalyzer(audioContext.sampleRate)
-    await audioContext.audioWorklet.addModule('/probe-processor.js')
+    await audioContext.audioWorklet.addModule(new URL('probe-processor.js', document.baseURI).href)
     probe = new AudioWorkletNode(audioContext, 'probe-processor', { numberOfInputs: 1, numberOfOutputs: 1, outputChannelCount: [1] })
     source = audioContext.createMediaStreamSource(stream)
     source.connect(probe)
